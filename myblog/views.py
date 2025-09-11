@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404 ,HttpResponseRedirect
 from .models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from .forms import NewspaperForm
 
 def blog_view(request, cat_name=None, author_username=None):
     posts = Post.objects.filter(status=1)
@@ -49,3 +49,18 @@ def blog_search(request):
           posts = posts.filter(content__contains=request.GET.get('s'))
      content = {'posts':posts}
      return render(request, 'myblog/blog-home.html', content)
+
+
+def newspaper(request):
+    if request.method == 'POST':
+        form = NewspaperForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseRedirect('/')
+    
+    
+
+
+           

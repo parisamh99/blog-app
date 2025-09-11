@@ -26,3 +26,10 @@ class Post(models.Model):
     
     def __str__(self):
         return self.title
+    
+
+class Newspaper(models.Model):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email
