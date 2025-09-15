@@ -72,19 +72,7 @@
               <li><a href="{% url 'myapp:about' %}">About</a></li>
               <li><a href="{% url 'myblog:blog_home' %}">Blog</a></li>
                 
-              <li class="menu-has-children">
-                <a href="">Pages</a>
-                <ul>
-                  <li><a href="elements.html">Elements</a></li>
-                  <li class="menu-has-children">
-                    <a href="">Level 2 </a>
-                    <ul>
-                      <li><a href="#">Item One</a></li>
-                      <li><a href="#">Item Two</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
+             
               <li><a href="{% url 'myapp:contact' %}">Contact</a></li>
             </ul>
           </nav>
@@ -146,7 +134,7 @@
                   action="{% url 'myblog:newspaper' %}"
                   method="post"
                   class="subscription relative">
-                {% csrf_token %}
+                  {% csrf_token %}
                
                   <div class="input-group d-flex flex-row">
                     <input

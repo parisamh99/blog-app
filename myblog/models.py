@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from taggit.managers import TaggableManager
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -20,7 +22,7 @@ class Post(models.Model):
     counted_view = models.IntegerField(default=0)
     image = models.ImageField(upload_to='myblog/', default='myblog/default.jpg')
     category = models.ManyToManyField(Category,)
-    #tag
+    tag = TaggableManager()
     
     def __str__(self):
         return self.title
@@ -37,4 +39,4 @@ class Newspaper(models.Model):
         return self.email
     
 
-    
+

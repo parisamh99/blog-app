@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'multi_captcha_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,15 +43,30 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'robots',
+    'debug_toolbar',
+    'taggit',
+    'django_summernote',
+    'captcha',
     'myapp',
     'myblog',
  
 ]
 
+#adding captcha to admin
+MULTI_CAPTCHA_ADMIN = {
+    'engine': 'simple-captcha',
+}
+
+#site framework
 SITE_ID = 2
 
+#robots
 ROBOTS_USE_HOST = True
 ROBOTS_USE_SITEMAP = True
+
+#summernote config
+SUMMERNOTE_THEME ='bs4'
+
 
 
 
@@ -62,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'pro.urls'
@@ -143,3 +160,11 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+INTERNAL_IPS = [
+    
+    "127.0.0.1",
+    
+]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
