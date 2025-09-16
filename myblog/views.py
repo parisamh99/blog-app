@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import render,get_object_or_404 ,HttpResponseRedirect
-from .models import Post
+from .models import Post, Comment
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import NewspaperForm
+from .forms import NewspaperForm, CommentForm
+from django.contrib import messages
 
 def blog_view(request, **kwargs):
    posts = Post.objects.filter(status=1)
@@ -27,9 +28,19 @@ def blog_view(request, **kwargs):
 
 
 def single_blog_view(request,pid):
-     posts = get_object_or_404(Post, pk=pid)
-     content = {"posts":posts}
-     return render (request, 'myblog/single-blog.html',content)
+   if request.method == 'POST':
+       form = CommentForm(request.POST)
+       if form.is_valid():
+           form.save()
+           messages.add_message(request, messages.SUCCESS, 'your comment submited successfully')
+       else:
+           messages.add_message(request, messages.ERROR, 'your comment didnt submited')    
+       
+   posts = get_object_or_404(Post, pk=pid)
+   comments = Comment.objects.filter(post=posts.id, approved=True)
+   form = CommentForm()
+   content = {"posts":posts, "comments": comments, 'form':form}
+   return render (request, 'myblog/single-blog.html',content)
 
 
 
