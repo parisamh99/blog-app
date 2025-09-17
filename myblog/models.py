@@ -23,6 +23,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='myblog/', default='myblog/default.jpg')
     category = models.ManyToManyField(Category,)
     tag = TaggableManager()
+    login_require = models.BooleanField(default=False)
     
     def __str__(self):
         return self.title
@@ -48,6 +49,8 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     approved = models.BooleanField(default=False)
+    
+
 
     class Meta:
         ordering = ['-created']

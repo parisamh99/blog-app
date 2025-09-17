@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import blog_view, single_blog_view,test,blog_category,blog_search,newspaper
 from .feeds import LatestEntriesFeed
+
 app_name = 'myblog'
 
 urlpatterns = [

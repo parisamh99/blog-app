@@ -4,6 +4,7 @@ from .models import Post, Comment
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import NewspaperForm, CommentForm
 from django.contrib import messages
+from django.urls import reverse
 
 def blog_view(request, **kwargs):
    posts = Post.objects.filter(status=1)
@@ -34,13 +35,15 @@ def single_blog_view(request,pid):
            form.save()
            messages.add_message(request, messages.SUCCESS, 'your comment submited successfully')
        else:
-           messages.add_message(request, messages.ERROR, 'your comment didnt submited')    
-       
+           messages.add_message(request, messages.ERROR, 'your comment didnt submited')          
    posts = get_object_or_404(Post, pk=pid)
-   comments = Comment.objects.filter(post=posts.id, approved=True)
-   form = CommentForm()
-   content = {"posts":posts, "comments": comments, 'form':form}
-   return render (request, 'myblog/single-blog.html',content)
+   if not posts.login_require:
+     comments = Comment.objects.filter(post=posts.id, approved=True)
+     form = CommentForm()
+     content = {"posts":posts, "comments": comments, 'form':form}
+     return render (request, 'myblog/single-blog.html',content)
+   else:
+     return HttpResponseRedirect(reverse('accounts:login'))
 
 
 

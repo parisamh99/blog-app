@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'captcha',
     'myapp',
     'myblog',
- 
+    'accounts',
 ]
 
 #adding captcha to admin
